@@ -5,7 +5,7 @@ function EventEmitter() {
 /**
  * name : event name
  * callback function
- * return this
+ * return callback id
  */
 EventEmitter.prototype.on = function(name,callback) {
 	if (!(name in this.listener)) {
@@ -13,7 +13,7 @@ EventEmitter.prototype.on = function(name,callback) {
 	}
 	//args = (typeof args == "object" && args.constructor === Object) ? args || (args ? [args] : []);
 	this.listener[name].push(callback);
-	return this;
+	return this.listener.length - 1;
 };
 
 /**
@@ -28,10 +28,20 @@ EventEmitter.prototype.once = function(name,callback) {
 
 /**
  * name : event name
+ * int callback_id
+ * callback function
+ * return callback
+ */
+EventEmitter.prototype.removeListener = function(name,callback_id) {
+	return this.listener[name].splice(callback_id,1);
+};
+
+/**
+ * name : event name
  * callback function
  * return this
  */
-EventEmitter.prototype.removeListener = function(name) {
+EventEmitter.prototype.removeAllListeners = function(name) {
 	this.listener[name] = [];
 	return this;
 };
