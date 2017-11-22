@@ -60,7 +60,7 @@ EventEmitter.prototype.emit = function(name) {
 		args.push(arguments[i]);
 	}
 	if (name in this.listener) {
-		for(i=0;i<this.listener.length;i++) {
+		for(i=0;i<this.listener[name].length;i++) {
 			this.listener[name][i].apply(this,args);
 		}
 	}
